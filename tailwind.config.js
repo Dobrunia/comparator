@@ -11,6 +11,7 @@ export default {
       colors: {
         'root-bg': '#F5F5F5',
         'text': '#42A5F5',
+        'border': '#3686C7'
       },
       backgroundImage: {},
       borderRadius: {

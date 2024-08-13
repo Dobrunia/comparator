@@ -2,12 +2,13 @@ import { Box, Button, TextField, Typography } from '@mui/material';
 import { Send } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import React from 'react';
+import AppState from '../../state/state.ts';
 
 export const InputModal = React.memo(() => {
   const [loading, setLoading] = React.useState(false);
   const handleClick = () => {
     setLoading(true);
-    fetchAndParseHtml();
+    AppState.currentView = 'play';
   };
   const fetchAndParseHtml = async () => {
     try {
@@ -50,7 +51,7 @@ export const InputModal = React.memo(() => {
       </Typography>
 
       <div className="flex items-center justify-center">
-        <TextField id="vk_id" label="Id" variant="outlined" />
+        <TextField id="vk_id" label="Id" variant="outlined" required/>
         <LoadingButton
           size="large"
           type="submit"

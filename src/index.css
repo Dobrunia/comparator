@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    box-sizing: border-box;
+}
+
 #root {
     font-family: "roboto";
+}
+
+.element-hover:hover {
+    border: 2px solid red;
+    border-radius: 4px;
 }

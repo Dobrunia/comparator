@@ -10,7 +10,7 @@ export const ComparableElement = React.memo((props: ComparableElementProps) => {
   return (
     <div>
       <img
-        src={props.itemData.photo}
+        src={props.itemData.img}
         alt="нет изображения :("
         className="w-[300px] h-[300px] rounded-main element-hover cursor-pointer drop-shadow-2xl hover:drop-shadow-xl "
         onClick={
@@ -23,7 +23,7 @@ export const ComparableElement = React.memo((props: ComparableElementProps) => {
         {props.itemData.name}
       </div>
       <div className="text-center text-base opacity-70">
-        {props.itemData.singer}
+        {props.itemData.artist}
       </div>
     </div>
   );

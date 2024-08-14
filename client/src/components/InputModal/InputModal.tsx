@@ -1,22 +1,37 @@
 import { Box, TextField, Typography } from '@mui/material';
 import { Send } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
-import React from 'react';
+import React, { useRef } from 'react';
 import AppState from '../../state/state.ts';
-import { fetchFriendsData } from '../../http/http.ts';
+import { fetchMusicData } from '../../http/http.ts';
 
 export const InputModal = React.memo(() => {
   const [loading, setLoading] = React.useState(false);
-  const handleClick = async () => {
+  const span = useRef(null);
+  const loadingStarts = () => {
     setLoading(true);
-    const vkId = document.getElementById('vk_id')?.value;
-    if (!vkId) {
+    span.current.classList.remove('hidden');
+  };
+  const loadingFinished = () => {
+    setLoading(false);
+    span.current.classList.add('hidden');
+    document.getElementById('playlist_url').value = '';
+  };
+  const handleClick = async () => {
+    const url = document.getElementById('playlist_url')?.value;
+    if (!url) {
       alert('Поле не может быть пустым!');
       return;
     }
-    AppState.elements = await fetchFriendsData(vkId);
-    console.log(AppState.elements);
-    AppState.currentView = 'play';
+    loadingStarts();
+    const response = await fetchMusicData(url);
+    if (response.length > 0) {
+      AppState.elements = response;
+      AppState.currentView = 'play';
+    } else {
+      alert('Данный плейлист не поддерживается, попробуйте другой!');
+      loadingFinished();
+    }
   };
   return (
     <Box
@@ -32,17 +47,16 @@ export const InputModal = React.memo(() => {
       autoComplete="off"
     >
       <Typography variant="h4" textAlign={'center'}>
-        Введите Id от Vk
+        Введите ссылку на Яндекс плейлист
+        <br />
+        (не все плейлисты с музыкой поддерживаются)
       </Typography>
-      <Typography variant="subtitle2" textAlign={'center'} mb={10}>
-        (только цифры, можно взять на вашей странице после "https://vk.com/")
-      </Typography>
+      <img src="getUrl.PNG" alt="" />
       <div className="flex items-center justify-center">
         <TextField
-          id="vk_id"
-          label="Id"
+          id="playlist_url"
+          label="ссылка на плейлист"
           variant="outlined"
-          type="number"
           required
         />
         <LoadingButton
@@ -58,6 +72,9 @@ export const InputModal = React.memo(() => {
           <span>Send</span>
         </LoadingButton>
       </div>
+      <span ref={span} className="hidden">
+        Это может занять до 5мин
+      </span>
     </Box>
   );
 });

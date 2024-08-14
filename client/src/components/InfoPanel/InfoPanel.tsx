@@ -12,8 +12,8 @@ export const InfoPanel = React.memo(() => {
     >
       <span className="text-4xl mb-[20px]">Турнир лучших</span>
       <span className="text-center italic mb-[20px]">
-        Отправьте своё ID или ID любого пользователя с открытым профилем VK,
-        <br /> и выбирайте лучшее из его музыки или друзей.
+        Отправьте ссылку на открытый Яндекс плейлист с музыкой,
+        <br /> и выбирайте лучшее из музыки.
       </span>
       <Button
         variant="contained"

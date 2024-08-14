@@ -1,11 +1,11 @@
-export async function fetchFriendsData(userId: number) {
+export async function fetchMusicData(url: number) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_SERVER_HOST}/parse-friends`, {
+    const response = await fetch(`${import.meta.env.VITE_SERVER_HOST}/parse-music`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ userId: userId }),
+      body: JSON.stringify({ url: url }),
     });
 
     if (!response.ok) {
@@ -15,7 +15,7 @@ export async function fetchFriendsData(userId: number) {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Error fetching friends data:', error);
+    console.error('Error fetching music data:', error);
     return [];
   }
 }

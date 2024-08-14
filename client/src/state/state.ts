@@ -4,8 +4,8 @@ type viewType = 'info' | 'sendId' | 'play';
 export type elementType = {
   id: number;
   name: string;
-  photo: string;
-  singer?: string;
+  img: string;
+  artist?: string;
 };
 
 class AppState {

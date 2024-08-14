@@ -4,26 +4,17 @@ const cors = require('cors');
 
 const app = express();
 const PORT = 3000;
-
 app.use(cors());
 app.use(express.json());
 
 app.post('/parse-music', async (req, res) => {
   try {
     const { url } = req.body;
-    const result = [];
-
-    // Запускаем браузер Puppeteer
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-
-    // Открываем страницу и ждём её полной загрузки
     await page.goto(url, { waitUntil: 'networkidle2' });
-
-    // Прокручиваем страницу вниз до конца, чтобы подгрузились все элементы
     await autoScroll(page);
 
-    // Извлекаем данные о треках
     const items = await page.evaluate(() => {
       const tracks = [];
       document.querySelectorAll('.d-track_with-cover').forEach((element) => {
@@ -41,7 +32,6 @@ app.post('/parse-music', async (req, res) => {
     });
 
     await browser.close();
-
     res.status(200).json(items);
   } catch (error) {
     console.error('Error parsing the page:', error);
@@ -68,7 +58,6 @@ async function autoScroll(page) {
         const scrollHeight = document.body.scrollHeight;
         window.scrollBy(0, distance);
         totalHeight += distance;
-
         if (totalHeight >= scrollHeight) {
           clearInterval(timer);
           resolve();

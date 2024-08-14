@@ -1,4 +1,4 @@
-export async function fetchMusicData(url: number) {
+export async function fetchMusicData(url: string) {
   try {
     const response = await fetch(`${import.meta.env.VITE_SERVER_HOST}/parse-music`, {
       method: 'POST',

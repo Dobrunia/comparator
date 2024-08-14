@@ -1,24 +1,35 @@
+import React, { useRef } from 'react';
 import { Box, TextField, Typography } from '@mui/material';
 import { Send } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
-import React, { useRef } from 'react';
 import AppState from '../../state/state.ts';
 import { fetchMusicData } from '../../http/http.ts';
 
 export const InputModal = React.memo(() => {
   const [loading, setLoading] = React.useState(false);
-  const span = useRef(null);
+  const span = useRef<HTMLSpanElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   const loadingStarts = () => {
     setLoading(true);
-    span.current.classList.remove('hidden');
+    if (span.current) {
+      span.current.classList.remove('hidden');
+    }
   };
+
   const loadingFinished = () => {
     setLoading(false);
-    span.current.classList.add('hidden');
-    document.getElementById('playlist_url').value = '';
+    if (span.current) {
+      span.current.classList.add('hidden');
+    }
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
   };
-  const handleClick = async () => {
-    const url = document.getElementById('playlist_url')?.value;
+
+  const handleClick = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const url = inputRef.current?.value;
     if (!url) {
       alert('Поле не может быть пустым!');
       return;
@@ -33,6 +44,7 @@ export const InputModal = React.memo(() => {
       loadingFinished();
     }
   };
+
   return (
     <Box
       component="form"
@@ -48,16 +60,16 @@ export const InputModal = React.memo(() => {
     >
       <Typography variant="h4" textAlign={'center'}>
         Введите ссылку на Яндекс плейлист
-        <br />
-        (не все плейлисты с музыкой поддерживаются)
       </Typography>
-      <img src="getUrl.PNG" alt="" />
+      <span>(не все плейлисты поддерживаются)</span>
+      <img className="mb-[16px] mt-[16px]" src="getUrl.PNG" alt="" />
       <div className="flex items-center justify-center">
         <TextField
           id="playlist_url"
           label="ссылка на плейлист"
           variant="outlined"
           required
+          inputRef={inputRef} // Используем реф для получения значения
         />
         <LoadingButton
           size="large"
@@ -73,7 +85,7 @@ export const InputModal = React.memo(() => {
         </LoadingButton>
       </div>
       <span ref={span} className="hidden">
-        Это может занять до 5мин
+        Это может занять до 5 мин
       </span>
     </Box>
   );

@@ -1,15 +1,16 @@
 import { makeAutoObservable } from 'mobx';
 
 type viewType = 'info' | 'sendId' | 'play';
-export type elementType = { id: number; name: string; photo: any; singer?: string };
+export type elementType = {
+  id: number;
+  name: string;
+  photo: string;
+  singer?: string;
+};
 
 class AppState {
   private _currentView: viewType = 'info';
-  private _elements: elementType[] = [
-    { id: 1, name: 'Element 1', photo: '1.png', singer: 'Singer 1' },
-    { id: 2, name: 'Element 2', photo: '2.png', singer: 'Singer 2' },
-    { id: 3, name: 'Element 3', photo: '3.png', singer: 'Singer 3' },
-  ];
+  private _elements: elementType[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -27,8 +28,8 @@ class AppState {
     this._currentView = view;
   }
 
-  addElement(element: elementType) {
-    this._elements.push(element);
+  set elements(elements: elementType[]) {
+    this._elements = elements;
   }
 
   deleteElement(id: number) {

@@ -1,4 +1,3 @@
-import { ComparableElement } from '../ComparableElement/ComparableElement';
 import { InputModal } from '../InputModal/InputModal';
 import { InfoPanel } from '../InfoPanel/InfoPanel';
 import AppState from '../../state/state.ts';

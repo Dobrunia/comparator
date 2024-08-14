@@ -1,4 +1,3 @@
-import React from 'react';
 import AppState from '../../state/state.ts';
 import { observer } from 'mobx-react-lite';
 import { ComparableElement } from '../ComparableElement/ComparableElement.tsx';

@@ -1,34 +1,22 @@
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
 import { Send } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import React from 'react';
 import AppState from '../../state/state.ts';
+import { fetchFriendsData } from '../../http/http.ts';
 
 export const InputModal = React.memo(() => {
   const [loading, setLoading] = React.useState(false);
-  const handleClick = () => {
+  const handleClick = async () => {
     setLoading(true);
-    AppState.currentView = 'play';
-  };
-  const fetchAndParseHtml = async () => {
-    try {
-      // Выполняем fetch запрос к странице, которую хотим запарсить
-      const response = await fetch('https://vk.com/id191615887');
-      const text = await response.text();
-
-      // Создаем объект DOMParser для разбора HTML
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(text, 'text/html');
-
-      // Извлекаем интересующий контент (например, заголовок страницы)
-      const title = doc.querySelector('ProfileInfo').textContent;
-
-      // Обновляем состояние компонента
-      console.log(title);
-      setLoading(false);
-    } catch (error) {
-      console.error('Ошибка при парсинге:', error);
+    const vkId = document.getElementById('vk_id')?.value;
+    if (!vkId) {
+      alert('Поле не может быть пустым!');
+      return;
     }
+    AppState.elements = await fetchFriendsData(vkId);
+    console.log(AppState.elements);
+    AppState.currentView = 'play';
   };
   return (
     <Box
@@ -47,11 +35,16 @@ export const InputModal = React.memo(() => {
         Введите Id от Vk
       </Typography>
       <Typography variant="subtitle2" textAlign={'center'} mb={10}>
-        (только цифры, можно взять на вашей странице после "https://vk.com/id")
+        (только цифры, можно взять на вашей странице после "https://vk.com/")
       </Typography>
-
       <div className="flex items-center justify-center">
-        <TextField id="vk_id" label="Id" variant="outlined" required/>
+        <TextField
+          id="vk_id"
+          label="Id"
+          variant="outlined"
+          type="number"
+          required
+        />
         <LoadingButton
           size="large"
           type="submit"

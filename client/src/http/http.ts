@@ -1,10 +1,6 @@
-import * as dotenv from 'dotenv';
-
-dotenv.config();
-
 export async function fetchFriendsData(userId: number) {
   try {
-    const response = await fetch(`${process.env.SERVER_HOST}/parse-friends`, {
+    const response = await fetch(`${import.meta.env.VITE_SERVER_HOST}/parse-friends`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

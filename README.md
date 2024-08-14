@@ -41,7 +41,7 @@ Make sure you have Node.js and npm installed on your machine.
 ### Cloning the Repository
 
 ```bash
-git clone https://github.com/yourusername/comparator.git
+git clone https://github.com/Dobrunia/comparator.git
 cd comparator
 ```
 
@@ -50,6 +50,14 @@ cd comparator
 ### 1. Client
 
 Navigate to the client directory and install the necessary dependencies:
+
+```bash
+npm install
+```
+
+### 2. Server
+
+Navigate to the server directory and install the necessary dependencies:
 
 ```bash
 npm install

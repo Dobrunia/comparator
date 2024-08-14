@@ -69,7 +69,7 @@ export const InputModal = React.memo(() => {
           label="ссылка на плейлист"
           variant="outlined"
           required
-          inputRef={inputRef} // Используем реф для получения значения
+          inputRef={inputRef}
         />
         <LoadingButton
           size="large"
